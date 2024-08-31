@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private float offset = 1.28f;
     private bool gameOngoing = true;
     private GameObject[] enemyList = new GameObject[3];
+    private float timeBetweenSpawn = 1f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,11 @@ public class GameManager : MonoBehaviour
             int enemy = Random.Range(0, 3);
             int position = Random.Range(0, 5);
             Instantiate(enemyList[enemy], new Vector2(11, 0.85f - (offset * position)), Quaternion.identity);
-            yield return new WaitForSeconds((enemy * 0.4f) + 1);
+            yield return new WaitForSeconds((enemy * 1f) + timeBetweenSpawn + 1f);
+            if(timeBetweenSpawn > 0)
+            {
+                timeBetweenSpawn -= 0.1f;
+            }
         }
     }
 }

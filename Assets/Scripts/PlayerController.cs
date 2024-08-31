@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject Bullet;
     [SerializeField] private GameObject TankTip;
     [SerializeField] private PlayerInput pInputs;
+    [SerializeField] private GameObject TankExplosion;
+    [SerializeField] private AudioSource Fire;
     private InputAction move;
     private InputAction shoot;
     private InputAction pause;
@@ -87,10 +89,14 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator BulletDownTime()
     {
+        TankExplosion.SetActive(true);
         canShoot = false;
+        Fire.Play();
         Instantiate(Bullet, new Vector2(TankTip.transform.position.x, TankTip.transform.position.y),
             this.transform.rotation);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.2f);
+        TankExplosion.SetActive(false);
+        yield return new WaitForSeconds(0.4f);
         canShoot = true;
     }
 }
