@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -7,10 +8,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Snake;
     [SerializeField] private GameObject Slime;
     [SerializeField] private GameObject Snail;
+    [SerializeField] private TMP_Text ScoreText;
+    [SerializeField] private TMP_Text LivesText;
     private float offset = 1.28f;
     private bool gameOngoing = true;
     private GameObject[] enemyList = new GameObject[3];
     private float timeBetweenSpawn = 1f;
+    private int score = 0;
+    private int lives = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +24,27 @@ public class GameManager : MonoBehaviour
         enemyList[1] = Slime;
         enemyList[2] = Snail;
         StartCoroutine(SpawnEnemy());
+    }
+
+    public void UpdateScore()
+    {
+        score += 100;
+        ScoreText.text = "Score: " + score;
+    }
+
+    public void UpdateLives()
+    {
+        lives--;
+        LivesText.text = "Lives: " + lives;
+        if(lives == 0)
+        {
+            LoseGame();
+        }
+    }
+
+    public void LoseGame()
+    {
+
     }
 
     IEnumerator SpawnEnemy()

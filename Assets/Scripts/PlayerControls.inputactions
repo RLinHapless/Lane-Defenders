@@ -24,9 +24,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Pause",
+                    "name": "Restart",
                     "type": "Button",
-                    "id": "23f1616f-2cc3-4993-8d9b-d6f81eefbe66",
+                    "id": "f406418f-7019-4cfc-99d6-cb19a59e2756",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Quit",
+                    "type": "Button",
+                    "id": "d22c374d-08a1-4906-9c0a-598b05c303f7",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -113,12 +122,23 @@
                 },
                 {
                     "name": "",
-                    "id": "54aec7af-d78c-4be2-9700-b7e6dff34076",
-                    "path": "<Keyboard>/escape",
+                    "id": "033fc259-df58-4f06-997d-1375649cd2a5",
+                    "path": "<Keyboard>/r",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pause",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fe3ab11d-0ff0-46d1-b471-7f810567c5f0",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Quit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

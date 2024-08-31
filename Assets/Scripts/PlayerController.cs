@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,7 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private AudioSource Fire;
     private InputAction move;
     private InputAction shoot;
-    private InputAction pause;
+    private InputAction restart;
+    private InputAction quit;
 
     private float moveDirection;
     private float speed = 10;
@@ -26,15 +28,37 @@ public class PlayerController : MonoBehaviour
         pInputs.currentActionMap.Enable();
         move = pInputs.currentActionMap.FindAction("Move");
         shoot = pInputs.currentActionMap.FindAction("Shoot");
-        pause = pInputs.currentActionMap.FindAction("Pause");
+        restart = pInputs.currentActionMap.FindAction("restart");
+        quit = pInputs.currentActionMap.FindAction("quit");
 
         move.started += MoveStarted;
         move.canceled += MoveCanceled;
         shoot.started += ShootStarted;
         shoot.canceled += ShootCanceled;
-        pause.started += PauseStarted;
+        restart.started += RestartStarted;
+        quit.started += QuitStarted;
 
         canShoot = true;
+    }
+
+    private void OnDestroy()
+    {
+        move.started -= MoveStarted;
+        move.canceled -= MoveCanceled;
+        shoot.started -= ShootStarted;
+        shoot.canceled -= ShootCanceled;
+        restart.started -= RestartStarted;
+        quit.started -= QuitStarted;
+    }
+
+    private void QuitStarted(InputAction.CallbackContext obj)
+    {
+        Application.Quit();
+    }
+
+    private void RestartStarted(InputAction.CallbackContext obj)
+    {
+        SceneManager.LoadScene(0);
     }
 
     private void ShootCanceled(InputAction.CallbackContext obj)
@@ -46,12 +70,6 @@ public class PlayerController : MonoBehaviour
     {
         isShooting = true;
     }
-
-    private void PauseStarted(InputAction.CallbackContext obj)
-    {
-        throw new System.NotImplementedException();
-    }
-
     private void MoveCanceled(InputAction.CallbackContext obj)
     {
         isMoving = false;
