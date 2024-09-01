@@ -7,6 +7,9 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private int Health;
     [SerializeField] private int Speed;
     [SerializeField] private AudioSource Damaged;
+    [SerializeField] private AudioSource Dies;
+    [SerializeField] private GameObject TankExplosion;
+    private Vector3 pointHit;
     private Animator anim;
     private GameManager gameManager;
 
@@ -22,6 +25,9 @@ public class EnemyController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Bullet"))
         {
+            pointHit = new Vector3(collision.transform.position.x, collision.transform.position.y, 
+                collision.transform.position.z);
+            Instantiate(TankExplosion, pointHit, Quaternion.identity);
             Health--;
             StartCoroutine(TakeDamage());
         }
@@ -44,6 +50,7 @@ public class EnemyController : MonoBehaviour
         if (Health == 0)
         {
             anim.SetBool("Dead", true);
+            Dies.Play();
             yield return new WaitForSeconds(0.57f);
             gameManager.UpdateScore();
             Destroy(gameObject);

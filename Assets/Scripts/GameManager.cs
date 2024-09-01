@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -10,12 +11,16 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject Snail;
     [SerializeField] private TMP_Text ScoreText;
     [SerializeField] private TMP_Text LivesText;
+    [SerializeField] private TMP_Text LoseText;
+    [SerializeField] private AudioSource TakeDamage;
+    [SerializeField] private GameObject UI;
     private float offset = 1.28f;
     private bool gameOngoing = true;
     private GameObject[] enemyList = new GameObject[3];
     private float timeBetweenSpawn = 1f;
     private int score = 0;
     private int lives = 3;
+    private PlayerController pController;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +29,8 @@ public class GameManager : MonoBehaviour
         enemyList[1] = Slime;
         enemyList[2] = Snail;
         StartCoroutine(SpawnEnemy());
+        UI.SetActive(false);
+        pController = GameObject.FindObjectOfType<PlayerController>();
     }
 
     public void UpdateScore()
@@ -36,6 +43,7 @@ public class GameManager : MonoBehaviour
     {
         lives--;
         LivesText.text = "Lives: " + lives;
+        TakeDamage.Play();
         if(lives == 0)
         {
             LoseGame();
@@ -44,7 +52,20 @@ public class GameManager : MonoBehaviour
 
     public void LoseGame()
     {
+        UI.SetActive(true);
+        gameOngoing = false;
+        LoseText.text = "Game Over!\nFinal Score: " + score + "\nHigh Score: ";
+        pController.Lose();
+    }
 
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 
     IEnumerator SpawnEnemy()

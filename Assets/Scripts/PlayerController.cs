@@ -41,6 +41,15 @@ public class PlayerController : MonoBehaviour
         canShoot = true;
     }
 
+    public void Lose()
+    {
+        move.started -= MoveStarted;
+        move.canceled -= MoveCanceled;
+        shoot.started -= ShootStarted;
+        shoot.canceled -= ShootCanceled;
+        this.transform.position = new Vector2(999, 999);
+    }
+
     private void OnDestroy()
     {
         move.started -= MoveStarted;
@@ -107,14 +116,13 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator BulletDownTime()
     {
-        TankExplosion.SetActive(true);
+        Instantiate(TankExplosion, new Vector2(TankTip.transform.position.x, TankTip.transform.position.y),
+            this.transform.rotation);
         canShoot = false;
         Fire.Play();
         Instantiate(Bullet, new Vector2(TankTip.transform.position.x, TankTip.transform.position.y),
             this.transform.rotation);
-        yield return new WaitForSeconds(0.2f);
-        TankExplosion.SetActive(false);
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.6f);
         canShoot = true;
     }
 }
