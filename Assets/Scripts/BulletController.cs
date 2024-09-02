@@ -19,7 +19,7 @@ public class BulletController : MonoBehaviour
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
-            //bullet only destroys itself. Damage dealt is handled in the EnemyController script.
+            //bullet only destroys itself. Damage dealt is handled in the EnemyController script
             Destroy(gameObject); 
         }
     }
