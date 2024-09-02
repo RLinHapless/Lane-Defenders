@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
         Fire.Play();
         Instantiate(Bullet, new Vector2(TankTip.transform.position.x, TankTip.transform.position.y),
             this.transform.rotation);
-        yield return new WaitForSeconds(0.6f);
+        yield return new WaitForSeconds(0.62f);
         canShoot = true;
     }
 }

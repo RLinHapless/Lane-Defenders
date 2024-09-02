@@ -51,7 +51,7 @@ public class EnemyController : MonoBehaviour
         {
             anim.SetBool("Dead", true);
             Dies.Play();
-            yield return new WaitForSeconds(0.57f);
+            yield return new WaitForSeconds(0.6f);
             gameManager.UpdateScore();
             Destroy(gameObject);
         }

@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour
     {
         score += 100;
         ScoreText.text = "Score: " + score;
+        if (score > PlayerPrefs.GetInt("HighScore"))
+        {
+            PlayerPrefs.SetInt("HighScore", score);
+        }
     }
 
     public void UpdateLives()
@@ -54,7 +58,7 @@ public class GameManager : MonoBehaviour
     {
         UI.SetActive(true);
         gameOngoing = false;
-        LoseText.text = "Game Over!\nFinal Score: " + score + "\nHigh Score: ";
+        LoseText.text = "Game Over!\nFinal Score: " + score + "\nHigh Score: " + PlayerPrefs.GetInt("HighScore");
         pController.Lose();
     }
 
